@@ -1,5 +1,7 @@
+import 'package:foody/pages/cart/cart_history.dart';
+
 class CartModel {
-  int? id;
+  String? id;
   String? name;
   double? price;
   String? img;
@@ -17,7 +19,7 @@ class CartModel {
       this.time});
 
   CartModel.fromJSON(Map<String, dynamic> json) {
-    id = json["id"];
+    id = json["id"].toString();
     name = json["name"];
     price = json["price"].toDouble();
     img = json["img"];
@@ -36,5 +38,27 @@ class CartModel {
       "isExist": isExist,
       "time": time
     };
+  }
+}
+
+class CartHistoryModel {
+  List<CartModel> _cartHistoryItems = [];
+  List<CartModel> get cartHistoryItems => _cartHistoryItems;
+
+  CartHistoryModel(List<CartModel> cartHistory) {
+    _cartHistoryItems = cartHistory;
+  }
+
+  Map<String, dynamic> toJSON() {
+    return {
+      "cartHistoryItems": _cartHistoryItems.map((e) => e.toJSON()).toList(),
+    };
+  }
+
+  CartHistoryModel.fromJSON(Map<String, dynamic> json) {
+    var x = json["cartHistoryItems"].map((e) => CartModel.fromJSON(e)).toList();
+    _cartHistoryItems = (json["cartHistoryItems"] as List)
+        .map((e) => CartModel.fromJSON(Map<String, dynamic>.from(e)))
+        .toList();
   }
 }

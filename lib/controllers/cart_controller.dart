@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:foody/data/repository/card_repo.dart';
 import 'package:foody/models/cart_model.dart';
 import 'package:foody/models/product_list_model.dart';
+import 'package:foody/services/cart.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
   final CartRepo cartRepo;
+  final CartService cartService;
 
-  final Map<int, CartModel> _cart = {};
+  CartController({required this.cartRepo, required this.cartService});
+
+  final Map<String, CartModel> _cart = {};
   List<CartModel> _cartHistory = [];
   List<CartModel> get cartHistory => _cartHistory;
   set setCartFromLocalStorage(bool i) {
@@ -53,12 +57,10 @@ class CartController extends GetxController {
 
   int _cartQuantity = 0;
   int get cartQuantity => _cartQuantity;
-  set initCartQuantity(int productId) => _cartQuantity =
+  set initCartQuantity(String productId) => _cartQuantity =
       _cart.containsKey(productId) ? _cart[productId]!.quantity! : 0;
 
   int get cartItemCount => _cart.length;
-
-  CartController({required this.cartRepo});
 
   void addToCart(ProductItem product) {
     int cartQuantity =
@@ -127,15 +129,16 @@ class CartController extends GetxController {
     return total;
   }
 
-  void addToCartHistory() {
+  Future addToCartHistory() async {
     cartRepo.addToCartHistory();
     _cart.removeWhere((key, value) => true);
+    await cartService.addCartHistoryToFireStore(cartRepo.getHistoryList);
     update();
   }
 
   Map<String, int> cartItemsPerOrder = {};
 
-  void getHistoryList() {
+  Future getHistoryList() async {
     _cartHistory = [];
     cartItemsPerOrder = {};
     for (var cartItem in cartRepo.getHistoryList) {

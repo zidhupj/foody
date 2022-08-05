@@ -18,6 +18,13 @@ class CartRepo extends GetxService {
     _cart = cartList.map((e) => jsonEncode(e.toJSON())).toList();
   }
 
+  set initCartHistory(List<CartModel> cartHistory) {
+    var cartHistoryString =
+        cartHistory.map((e) => jsonEncode(e.toJSON())).toList();
+    sharedPreferences.setStringList(
+        AppConstants.cartHistoryList, cartHistoryString);
+  }
+
   void addToCartList(List<CartModel> cartList) {
     // sharedPreferences.remove(AppConstants.cartHistoryList);
     // sharedPreferences.remove(AppConstants.cartList);

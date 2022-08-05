@@ -1,31 +1,30 @@
 import 'package:foody/data/repository/recommended_product_repo.dart';
 import 'package:foody/models/product_list_model.dart';
+import 'package:foody/services/recommended_product.dart';
 import 'package:get/get.dart';
 
 class RecommendedProductController extends GetxController {
-  final RecommendedProductRepo recommendedProductRepo;
-  List<ProductItem> _recommendedProductList = [];
-  List<ProductItem> get recommendedProductList => _recommendedProductList;
+  final RecommendedProductService recommendedProductService;
+  Rx<List<ProductItem>> _recommendedProductList = Rx<List<ProductItem>>([]);
+  List<ProductItem> get recommendedProductList => _recommendedProductList.value;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
-  RecommendedProductController({required this.recommendedProductRepo});
+  RecommendedProductController({required this.recommendedProductService});
 
   Future<void> getRecommendedProductList() async {
     _isLoaded = false;
-    Response response =
-        await recommendedProductRepo.getRecommendedProductList();
-    if (response.statusCode == 200) {
-      print("Got recomended product list");
-      _recommendedProductList = [];
-      _recommendedProductList
-          .addAll(Products.fromJSON(response.body).productList);
-      _isLoaded = true;
+    // Response response =
+    //     await recommendedProductRepo.getRecommendedProductList();
+    var recommendedProductsStream =
+        recommendedProductService.getRecommendedProductStream();
+    print("Got recomended product list");
+    _recommendedProductList = Rx<List<ProductItem>>([]);
+    _recommendedProductList.bindStream(recommendedProductsStream);
+    ever(_recommendedProductList, (_) {
       update();
-    } else {
-      print("Got no response");
-      print(response.request!.url);
-    }
+    });
+    _isLoaded = true;
   }
 }

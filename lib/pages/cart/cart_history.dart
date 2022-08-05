@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/controllers/cart_controller.dart';
+import 'package:foody/routes/route_helper.dart';
 import 'package:foody/utils/app_constants.dart';
 import 'package:foody/utils/dimensions.dart';
 import 'package:foody/widgets/app_icon.dart';
@@ -33,11 +34,14 @@ class CartHistory extends StatelessWidget {
                   color: Colors.white,
                   size: 2.25 * Dimensions.font10,
                 ),
-                AppIcon(
-                  icon: CupertinoIcons.cart_fill,
-                  iconColor: Colors.white,
-                  backgroundColor: Colors.transparent,
-                  iconSize: 2.25 * Dimensions.font10,
+                InkWell(
+                  onTap: () => Get.toNamed(RouteHelper.cart),
+                  child: AppIcon(
+                    icon: CupertinoIcons.cart_fill,
+                    iconColor: Colors.white,
+                    backgroundColor: Colors.transparent,
+                    iconSize: 2.25 * Dimensions.font10,
+                  ),
                 )
               ])),
       GetBuilder<CartController>(builder: (cart) {
@@ -97,7 +101,9 @@ class CartHistory extends StatelessWidget {
                                                         image: DecorationImage(
                                                             fit: BoxFit.cover,
                                                             image: NetworkImage(
-                                                                "${AppConstants.baseUrl}uploads/${historyList[counter++].img}"))),
+                                                                historyList[
+                                                                        counter++]
+                                                                    .img!))),
                                                   ),
                                                   SizedBox(
                                                       width: Dimensions.width10)

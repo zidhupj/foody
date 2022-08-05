@@ -21,6 +21,7 @@ class SmallText extends StatelessWidget {
       text,
       textAlign: TextAlign.justify,
       style: TextStyle(
+        textBaseline: TextBaseline.alphabetic,
         color: color,
         fontSize: size == 0 ? Dimensions.font12 : size,
         fontWeight: FontWeight.w600,

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:foody/controllers/cart_controller.dart';
 import 'package:foody/controllers/popular_product_controller.dart';
 import 'package:foody/controllers/recommended_product_controller.dart';
+import 'package:foody/controllers/user_controller.dart';
 import 'package:foody/routes/route_helper.dart';
 import 'package:foody/utils/app_constants.dart';
 import 'package:foody/utils/dimensions.dart';
@@ -24,6 +25,8 @@ class CartPage extends StatelessWidget {
         Get.find<PopularProductController>().popularProductList;
     var recommendedProductList =
         Get.find<RecommendedProductController>().recommendedProductList;
+    var userController = Get.find<UserController>();
+
     return Scaffold(
         body: Stack(children: [
           //Top tool bar
@@ -104,7 +107,7 @@ class CartPage extends StatelessWidget {
                                           image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                  "${AppConstants.baseUrl}uploads/${cartItemList[index].img}")))),
+                                                  cartItemList[index].img!)))),
                                 ),
                                 SizedBox(width: 1.5 * Dimensions.width10),
                                 // Cart Item details
@@ -206,7 +209,13 @@ class CartPage extends StatelessWidget {
 
                 // Add to cart
                 GestureDetector(
-                  onTap: () => cart.addToCartHistory(),
+                  onTap: () {
+                    if (userController.user != null) {
+                      cart.addToCartHistory();
+                    } else {
+                      Get.toNamed(RouteHelper.auth);
+                    }
+                  },
                   child: Container(
                     height: double.maxFinite,
                     width: 18 * Dimensions.width10,

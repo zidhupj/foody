@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/controllers/cart_controller.dart';
 import 'package:foody/controllers/recommended_product_controller.dart';
@@ -28,12 +29,14 @@ class RecommendedFoodDetails extends StatelessWidget {
             SliverAppBar(
               automaticallyImplyLeading: false,
               pinned: true,
-              backgroundColor: Colors.teal,
+              backgroundColor: CupertinoColors.secondaryLabel,
               expandedHeight: 30 * Dimensions.height10,
               toolbarHeight: 7 * Dimensions.height10,
               flexibleSpace: FlexibleSpaceBar(
-                background:
-                    Image.asset("assets/images/food2.jpg", fit: BoxFit.cover),
+                background: Image.network(product.img!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Expanded(
+                        child: ColoredBox(color: CupertinoColors.systemTeal))),
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

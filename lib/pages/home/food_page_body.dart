@@ -131,7 +131,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
-                                        "${AppConstants.baseUrl}uploads/${recommendedProductList[index].img}"),
+                                        recommendedProductList[index].img!),
                                   ),
                                 )),
                             Expanded(
@@ -217,7 +217,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     matrix = Matrix4.diagonal3Values(1, currScale, 1)
       ..setTranslationRaw(0, currTrans, 0);
 
-    print("${AppConstants.baseUrl}uploads/${popularProduct.img!}");
+    // print("${AppConstants.baseUrl}uploads/${popularProduct.img!}");
 
     return GestureDetector(
         onTap: () {
@@ -238,8 +238,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           : Colors.lightGreen[300],
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "${AppConstants.baseUrl}uploads/${popularProduct.img!}")))),
+                          image: NetworkImage(popularProduct.img!)))),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(

@@ -6,6 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:foody/pages/cart/cart_history.dart';
 import 'package:foody/pages/home/main_food_page.dart';
+import 'package:foody/pages/user/profile.dart';
 import 'package:foody/widgets/big_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = const [
     MainFoodPage(),
     CartHistory(),
-    Center(child: BigText(text: "next next page")),
-    Center(child: BigText(text: "next next next page"))
+    ProfilePage()
   ];
 
   int _selectedIndex = 0;
@@ -42,11 +42,9 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.home), label: "Home"),
               BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.cart), label: "Cart"),
+                  icon: Icon(CupertinoIcons.cart), label: "Your Orders"),
               BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.person_alt), label: "Acc"),
-              BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.rectangle_stack), label: "Hi")
+                  icon: Icon(CupertinoIcons.person_alt), label: "Profile"),
             ]));
   }
 }

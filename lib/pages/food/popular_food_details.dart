@@ -18,6 +18,10 @@ class PopularFoodDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var product =
         Get.find<PopularProductController>().popularProductList[pageId];
+    for (var i in Get.find<PopularProductController>().popularProductList) {
+      print(i.name);
+    }
+    print(product.id);
     var cart = Get.find<CartController>();
     cart.initCurrentQuantity = 0;
     cart.initCartQuantity = product.id!;
@@ -32,10 +36,10 @@ class PopularFoodDetails extends StatelessWidget {
             child: Container(
               width: double.maxFinite,
               height: 35 * Dimensions.height10,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage("assets/images/food1.jpg"),
+                image: NetworkImage(product.img!),
               )),
             )),
         // Icon widgets

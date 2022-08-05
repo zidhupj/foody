@@ -31,16 +31,14 @@ class Products {
 }
 
 class ProductItem {
-  int? id;
+  String? id;
   String? name;
   String? description;
   double? price;
   double? stars;
   String? img;
   String? location;
-  String? createdAt;
-  String? updatedAt;
-  int? typeId;
+  String? type;
 
   ProductItem(
       {this.id,
@@ -48,13 +46,12 @@ class ProductItem {
       this.description,
       this.price,
       this.stars,
-      this.createdAt,
-      this.updatedAt,
       this.location,
       this.img,
-      this.typeId});
+      this.type});
 
   ProductItem.fromJSON(Map<String, dynamic> json) {
+    print(json);
     id = json["id"];
     name = json["name"];
     description = json["description"];
@@ -62,9 +59,7 @@ class ProductItem {
     stars = json["stars"].toDouble();
     img = json["img"];
     location = json["location"];
-    createdAt = json["created_at"];
-    updatedAt = json["updated_at"];
-    typeId = json["type_id"];
+    type = json["type_id"];
   }
 
   Map<String, dynamic> toJSON() {
@@ -76,9 +71,7 @@ class ProductItem {
       "stars": stars,
       "img": img,
       "location": location,
-      "createdAt": createdAt,
-      "updatedAt": updatedAt,
-      "typeId": typeId
+      "type": type
     };
   }
 }
